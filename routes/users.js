@@ -46,8 +46,27 @@ router.post("/",(req,res)=>{
 
 // PUT request: Update the details of a user by email ID
 router.put("/:email", (req, res) => {
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const email = req.params.email
+
+  //sort users
+  const sorted_users = users.sort( (a,b) => {
+    if(a.email === email) return -1
+    return 1
+  });
+
+  //remove user that matches
+  let user = null;
+  if(sorted_users[0].email === email){
+    user = sorted_users.shift()
+  }
+  if(!user) res.send(`Could not find user with address ${email}`)
+
+  //update user
+  new_user = { ...user,...req.query}
+
+  //add to users list
+  users.push(new_user)
+  res.send(`User with email ${email} updated.`)
 });
 
 
