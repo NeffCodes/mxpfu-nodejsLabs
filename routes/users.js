@@ -32,15 +32,15 @@ router.get("/",(req,res)=>{
 router.get("/:email",(req,res)=>{
   const email = req.params.email;
   const user = users.filter(u => u.email === email)
-
-  res.send(user)//This line is to be replaced with actual return value
+  res.send(user)
 });
 
 
 // POST request: Create a new user
 router.post("/",(req,res)=>{
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const new_user = req.query
+  users.push(new_user)
+  res.send(`New user ${new_user.firstName} ${new_user.lastName} added.`)
 });
 
 
