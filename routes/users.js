@@ -32,6 +32,8 @@ router.get("/",(req,res)=>{
 router.get("/:email",(req,res)=>{
   const email = req.params.email;
   const user = users.filter(u => u.email === email)
+
+  if(!user.length) res.send('Could not find user')
   res.send(user)
 });
 
@@ -72,8 +74,22 @@ router.put("/:email", (req, res) => {
 
 // DELETE request: Delete a user by email ID
 router.delete("/:email", (req, res) => {
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const email = req.params.email
+
+  //sort users
+  const sorted_users = users.sort( (a,b) => {
+    if(a.email === email) return -1
+    return 1
+  });
+
+  //remove user that matches
+  let user = null;
+  if(sorted_users[0].email === email){
+    user = sorted_users.shift()
+  }
+
+  if(!user) res.send(`Could not find user with address ${email}`)
+  res.send(`Removed user with email ${email}`)
 });
 
 module.exports=router;
